@@ -1,70 +1,154 @@
-# Getting Started with Create React App
+# [~] Conway's Game of Life
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A beautiful, interactive implementation of [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) built with React and HTML5 Canvas. Features glowing neon cells, classic pattern presets, and full playback controls.
 
-## Available Scripts
+> **[Live Demo ->](https://YOUR-USERNAME.github.io/game-of-life)**
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## What is Conway's Game of Life?
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Conway's Game of Life is a classic **cellular automaton** invented by British mathematician **John Horton Conway** in 1970. It was first introduced to the public in Martin Gardner's *Mathematical Games* column in *Scientific American* (October 1970).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+It is a zero-player game -- meaning it runs itself after you set the initial state.
 
-### `npm test`
+The universe is an infinite grid of cells. Each cell is either **alive** or **dead**. Every generation, the following rules are applied to every cell simultaneously:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| Rule | Description |
+|------|-------------|
+| **Survival** | A live cell with 2 or 3 live neighbours survives to the next generation |
+| **Death** | A live cell with fewer than 2 or more than 3 live neighbours dies |
+| **Birth** | A dead cell with exactly 3 live neighbours becomes alive |
 
-### `npm run build`
+These two simple rules produce extraordinarily complex and beautiful evolving patterns. The Game of Life is theoretically equivalent to a universal Turing machine -- meaning anything that can be computed algorithmically can be computed within it.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Features
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- * **Real-time simulation** -- watch patterns evolve generation by generation
+- - **Click to draw** -- toggle any cell alive or dead with a click
+- * **Colour slider** -- change the glow colour across the full spectrum
+- * **Speed control** -- adjust simulation speed from slow to fast
+- * **Random seed** -- fill the grid with a random starting population
+- * **Clear grid** -- wipe the board and draw your own pattern from scratch
+- * **Built-in presets** -- load classic patterns instantly:
+  - **Glider** -- a small pattern that travels diagonally across the grid
+  - **Pulsar** -- a large, symmetrical oscillator that pulses every 3 generations
+  - **R-Pentomino** -- a tiny 5-cell pattern that evolves chaotically for over 1,000 generations
+- * **Live stats** -- generation counter and population count displayed in real time
+- * **Wrapping edges** -- cells on the edge wrap around to the opposite side
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Getting Started
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Prerequisites
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- [Node.js](https://nodejs.org) v16 or higher
+- [Git](https://git-scm.com)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Run Locally
 
-## Learn More
+```bash
+# Clone the repository
+git clone https://github.com/YOUR-USERNAME/game-of-life.git
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Move into the project folder
+cd game-of-life
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Install dependencies
+npm install
 
-### Code Splitting
+# Start the development server
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## How to Use
 
-### Making a Progressive Web App
+| Control | Action |
+|---------|--------|
+| **> Play / || Pause** | Start or stop the simulation |
+| **~ Random** | Fill the grid with a random pattern |
+| **x Clear** | Empty the grid |
+| **Presets menu** | Load a classic pattern (Glider, Pulsar, R-Pentomino) |
+| **Click a cell** | Toggle it between alive and dead |
+| **Speed slider** | Drag right to speed up, left to slow down |
+| **Colour slider** | Change the neon glow colour |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+This project is deployed via [GitHub Pages](https://pages.github.com) using the `gh-pages` package.
 
-### Deployment
+```bash
+# Build and deploy to GitHub Pages
+npm run deploy
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+The live site will update at `https://YOUR-USERNAME.github.io/game-of-life` within a few minutes.
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Built With
+
+- [React](https://react.dev) -- UI and state management
+- [HTML5 Canvas](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) -- cell rendering with glow effects
+- [gh-pages](https://www.npmjs.com/package/gh-pages) -- GitHub Pages deployment
+
+---
+
+## Licence
+
+This project is split into two distinct parts with different licensing:
+
+### The Game of Life Rules -- Public Domain
+
+The rules and concept of Conway's Game of Life were devised by **John Horton Conway** (1937-2020) and published in 1970. Mathematical rules and game mechanics are not subject to copyright protection. The Game of Life concept is free for anyone to implement, study, and build upon, and has been widely used by programmers, mathematicians, and researchers for over 50 years.
+
+> *"Conway's Game of Life"* is named in honour of John Conway. His work is described on [Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) and the community wiki [LifeWiki](https://conwaylife.com/wiki/).
+
+### This Implementation -- MIT Licence
+
+The source code of this specific React implementation is released under the **MIT Licence**:
+
+```
+MIT License
+
+Copyright (c) 2026 YOUR-NAME
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+The MIT Licence is a short, permissive open source licence. It allows anyone to freely use, copy, modify, and distribute this code, provided the original copyright notice is included.
+
+---
+
+## Related Projects
+
+- * [Text Transposer](https://willtech.github.io/transposer/) -- another project by the same author
+
+---
+
+*Built with [Claude](https://claude.ai)*
