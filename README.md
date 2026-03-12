@@ -4,7 +4,7 @@ Working Implementation: [https://willtech.github.io/game-of-life/](https://willt
 
 A beautiful, interactive implementation of [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) built with React and HTML5 Canvas. Features glowing neon cells, classic pattern presets, and full playback controls.
 
-> **[Live Demo ->](https://YOUR-USERNAME.github.io/game-of-life)**
+> **[Live Demo ->](https://willtech.github.io/game-of-life/)**
 
 ---
 
