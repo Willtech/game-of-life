@@ -54,7 +54,7 @@ These two simple rules produce extraordinarily complex and beautiful evolving pa
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR-USERNAME/game-of-life.git
+git clone https://github.com/Willtech/game-of-life.git
 
 # Move into the project folder
 cd game-of-life
@@ -86,14 +86,14 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Deployment
 
-This project is deployed via [GitHub Pages](https://pages.github.com) using the `gh-pages` package.
+This project is deployed via [GitHub Pages](https://willtech.github.io/game-of-life/) using the `gh-pages` package.
 
 ```bash
 # Build and deploy to GitHub Pages
 npm run deploy
 ```
 
-The live site will update at `https://YOUR-USERNAME.github.io/game-of-life` within a few minutes.
+The live site will update at `https://willtech.github.io/game-of-life` within a few minutes.
 
 ---
 
