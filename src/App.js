@@ -13,7 +13,9 @@ const createRandomGrid = () =>
   );
 
 const PRESETS = {
-  Glider: [[0,1],[1,2],[2,0],[2,1],[2,2]],
+  Glider: [
+    [0,1],[1,2],[2,0],[2,1],[2,2]
+  ],
   Pulsar: [
     [2,4],[2,5],[2,6],[2,10],[2,11],[2,12],
     [4,2],[4,7],[4,9],[4,14],
@@ -26,7 +28,40 @@ const PRESETS = {
     [12,2],[12,7],[12,9],[12,14],
     [14,4],[14,5],[14,6],[14,10],[14,11],[14,12],
   ],
-  "R-Pentomino": [[1,2],[1,3],[2,1],[2,2],[3,2]],
+  "R-Pentomino": [
+    [1,2],[1,3],[2,1],[2,2],[3,2]
+  ],
+  // Gosper Glider Gun — discovered by Bill Gosper, November 1970.
+  // First known pattern with infinite growth. Fires a glider every 30 generations.
+  // Canonical coordinates from LifeWiki. Bounding box: 9 rows x 36 cols.
+  "Gosper Glider Gun": [
+    [0,24],
+    [1,22],[1,24],
+    [2,12],[2,13],[2,20],[2,21],[2,34],[2,35],
+    [3,11],[3,15],[3,20],[3,21],[3,34],[3,35],
+    [4,0],[4,1],[4,10],[4,16],[4,20],[4,21],
+    [5,0],[5,1],[5,10],[5,14],[5,16],[5,17],[5,22],[5,24],
+    [6,10],[6,16],[6,24],
+    [7,11],[7,15],
+    [8,12],[8,13],
+  ],
+};
+
+// Automatically centre any preset on the grid
+const centrePreset = (cells) => {
+  const rows = cells.map(([r]) => r);
+  const cols = cells.map(([, c]) => c);
+  const minR = Math.min(...rows);
+  const maxR = Math.max(...rows);
+  const minC = Math.min(...cols);
+  const maxC = Math.max(...cols);
+  const patternH = maxR - minR + 1;
+  const patternW = maxC - minC + 1;
+  const offsetR = Math.floor((ROWS - patternH) / 2) - minR;
+  const offsetC = Math.floor((COLS - patternW) / 2) - minC;
+  return cells
+    .map(([r, c]) => [r + offsetR, c + offsetC])
+    .filter(([r, c]) => r >= 0 && r < ROWS && c >= 0 && c < COLS);
 };
 
 const nextGeneration = (grid) => {
@@ -134,15 +169,11 @@ export default function GameOfLife() {
 
   const loadPreset = (name) => {
     const newGrid = createEmptyGrid();
-    const offsetR = Math.floor(ROWS / 2) - 8;
-    const offsetC = Math.floor(COLS / 2) - 8;
-    PRESETS[name].forEach(([r, c]) => {
-      const nr = r + offsetR;
-      const nc = c + offsetC;
-      if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS) newGrid[nr][nc] = 1;
-    });
+    const centred = centrePreset(PRESETS[name]);
+    centred.forEach(([r, c]) => { newGrid[r][c] = 1; });
     setGrid(newGrid);
     setGeneration(0);
+    setRunning(false);
   };
 
   return (
@@ -195,8 +226,8 @@ export default function GameOfLife() {
       }}>
         {[
           { label: running ? "⏸ Pause" : "▶ Play", onClick: handleToggleRun, primary: true },
-          { label: "⟳ Random", onClick: () => { setGrid(createRandomGrid()); setGeneration(0); } },
-          { label: "✕ Clear", onClick: () => { setGrid(createEmptyGrid()); setGeneration(0); setRunning(false); } },
+          { label: "⟳ Random", onClick: () => { setGrid(createRandomGrid()); setGeneration(0); setRunning(false); } },
+          { label: "✕ Clear",  onClick: () => { setGrid(createEmptyGrid()); setGeneration(0); setRunning(false); } },
         ].map((btn) => (
           <button key={btn.label} onClick={btn.onClick} style={{
             background: btn.primary ? `hsl(${hue}, 70%, 20%)` : "transparent",
@@ -210,21 +241,26 @@ export default function GameOfLife() {
             transition: "all 0.2s",
           }}
           onMouseOver={e => e.target.style.background = `hsl(${hue}, 70%, 28%)`}
-          onMouseOut={e => e.target.style.background = btn.primary ? `hsl(${hue}, 70%, 20%)` : "transparent"}
+          onMouseOut={e  => e.target.style.background = btn.primary ? `hsl(${hue}, 70%, 20%)` : "transparent"}
           >{btn.label}</button>
         ))}
 
-        <select onChange={(e) => loadPreset(e.target.value)} defaultValue="" style={{
-          background: "transparent",
-          border: `1px solid hsl(${hue}, 60%, 35%)`,
-          color: `hsl(${hue}, 80%, 75%)`,
-          padding: "6px 12px",
-          cursor: "pointer",
-          fontFamily: "inherit",
-          fontSize: "0.8rem",
-        }}>
+        <select
+          onChange={(e) => { if (e.target.value) loadPreset(e.target.value); }}
+          value=""
+          style={{
+            background: "transparent",
+            border: `1px solid hsl(${hue}, 60%, 35%)`,
+            color: `hsl(${hue}, 80%, 75%)`,
+            padding: "6px 12px",
+            cursor: "pointer",
+            fontFamily: "inherit",
+            fontSize: "0.8rem",
+          }}>
           <option value="" disabled>Presets</option>
-          {Object.keys(PRESETS).map((p) => <option key={p} value={p} style={{ background: "#0a0a0f" }}>{p}</option>)}
+          {Object.keys(PRESETS).map((p) => (
+            <option key={p} value={p} style={{ background: "#0a0a0f" }}>{p}</option>
+          ))}
         </select>
       </div>
 
