@@ -74,8 +74,8 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
 | Control | Action |
 |---------|--------|
-| **> Play / || Pause** | Start or stop the simulation |
-| **~ Random** | Fill the grid with a random pattern |
+| **> Play / \|\| Pause** | Start or stop the simulation |
+| **\~ Random** | Fill the grid with a random pattern |
 | **x Clear** | Empty the grid |
 | **Presets menu** | Load a classic pattern (Glider, Pulsar, R-Pentomino) |
 | **Click a cell** | Toggle it between alive and dead |
