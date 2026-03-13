@@ -38,6 +38,8 @@ These two simple rules produce extraordinarily complex and beautiful evolving pa
   - **Glider** -- a small pattern that travels diagonally across the grid
   - **Pulsar** -- a large, symmetrical oscillator that pulses every 3 generations
   - **R-Pentomino** -- a tiny 5-cell pattern that evolves chaotically for over 1,000 generations
+  - **Gosper Glider Gun** -- the first known infinitely growing pattern, firing a new glider every 30 generations
+- * **Shareable preset links** -- load any preset directly from the URL (see Linking to Presets below)
 - * **Live stats** -- generation counter and population count displayed in real time
 - * **Wrapping edges** -- cells on the edge wrap around to the opposite side
 
@@ -84,11 +86,29 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
+## Linking to Presets
+
+Any preset can be loaded directly from the URL using a hash. This makes it easy to bookmark or share a specific pattern:
+
+```
+https://willtech.github.io/game-of-life/#Glider
+https://willtech.github.io/game-of-life/#Pulsar
+https://willtech.github.io/game-of-life/#R-Pentomino
+https://willtech.github.io/game-of-life/#Gosper%20Glider%20Gun
+```
+
+The hash updates automatically when you select a preset from the dropdown, so you can always copy the URL from your browser's address bar to share the current view.
+
+---
+
 ## Deployment
 
 This project is deployed via [GitHub Pages](https://willtech.github.io/game-of-life/) using the `gh-pages` package.
 
 ```bash
+# Build first on initial deploy
+npm run build
+
 # Build and deploy to GitHub Pages
 npm run deploy
 ```
