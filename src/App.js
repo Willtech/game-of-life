@@ -57,7 +57,7 @@ const centrePreset = (cells) => {
   const maxC = Math.max(...cols);
   const patternH = maxR - minR + 1;
   const patternW = maxC - minC + 1;
-  const offsetR = Math.floor((ROWS - patternH) / 2) - minR;
+  const offsetR = Math.min(Math.floor((ROWS - patternH) / 2), 5) - minR;
   const offsetC = Math.floor((COLS - patternW) / 2) - minC;
   return cells
     .map(([r, c]) => [r + offsetR, c + offsetC])
@@ -167,14 +167,42 @@ export default function GameOfLife() {
     }
   };
 
-  const loadPreset = (name) => {
+  const loadPreset = useCallback((name) => {
+    if (!PRESETS[name]) return;
     const newGrid = createEmptyGrid();
     const centred = centrePreset(PRESETS[name]);
     centred.forEach(([r, c]) => { newGrid[r][c] = 1; });
     setGrid(newGrid);
     setGeneration(0);
     setRunning(false);
-  };
+    // Update the URL hash so the preset is bookmarkable and shareable
+    window.history.replaceState(null, "", "#" + encodeURIComponent(name));
+  }, []);
+
+  // On mount, read the hash and load the matching preset if valid.
+  // Falls back to a random grid if the hash is absent or unrecognised.
+  useEffect(() => {
+    const hash = decodeURIComponent(window.location.hash.slice(1));
+    if (hash && PRESETS[hash]) {
+      loadPreset(hash);
+    }
+  }, [loadPreset]);
+
+  // Listen for hash changes (e.g. browser back/forward, manual URL edit)
+  useEffect(() => {
+    const onHashChange = () => {
+      const hash = decodeURIComponent(window.location.hash.slice(1));
+      if (hash && PRESETS[hash]) {
+        loadPreset(hash);
+      } else if (!hash) {
+        setGrid(createRandomGrid());
+        setGeneration(0);
+        setRunning(false);
+      }
+    };
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, [loadPreset]);
 
   return (
     <div style={{
@@ -197,6 +225,13 @@ export default function GameOfLife() {
           textShadow: `0 0 20px hsl(${hue}, 100%, 60%)`,
           margin: 0,
         }}>Conway's Game of Life</h1>
+        <h4 style={{ margin: "6px 0 0 0", fontWeight: "normal", fontSize: "0.75rem", letterSpacing: "0.1em", opacity: 0.6 }}>
+          See this on GitHub&nbsp;
+          <a href="https://github.com/Willtech/game-of-life"
+             style={{ color: `hsl(${hue}, 80%, 70%)`, textDecoration: "underline" }}>
+            https://github.com/Willtech/game-of-life
+          </a>
+        </h4>
         <p style={{ opacity: 0.5, fontSize: "0.75rem", marginTop: 4, letterSpacing: "0.15em" }}>
           GEN {String(generation).padStart(6, "0")} &nbsp;|&nbsp; POP {String(population).padStart(6, "0")}
         </p>
